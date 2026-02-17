@@ -17,13 +17,13 @@ Uses the [LinuxServer.io](https://docs.linuxserver.io/images/docker-grocy/) cont
 ### From OCI registry
 
 ```bash
-helm install grocy oci://ghcr.io/harting/charts/grocy
+helm install grocy oci://ghcr.io/an0nfunc/charts/grocy
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/harting/grocy-helm.git
+git clone https://github.com/an0nfunc/grocy-helm.git
 cd grocy-helm
 helm install grocy .
 ```
