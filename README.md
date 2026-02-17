@@ -138,7 +138,6 @@ httpRoute:
   parentRefs:
     - name: default
       namespace: nginx-gateway
-      sectionName: https
   httpRedirect:
     enabled: true
 ```

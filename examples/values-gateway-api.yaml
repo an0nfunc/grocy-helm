@@ -8,7 +8,7 @@ httpRoute:
   parentRefs:
     - name: default
       namespace: nginx-gateway
-      sectionName: https
+      # sectionName: https  # depends on your gateway's listener names
   hostnames:
     - grocy.example.com
   httpRedirect:
