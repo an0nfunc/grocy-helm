@@ -32,12 +32,19 @@ helm install grocy .
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
+| `imagePullSecrets` | Image pull secrets | `[]` |
+| `serviceAccount.create` | Create a ServiceAccount | `true` |
+| `serviceAccount.name` | ServiceAccount name (auto-generated if empty) | `""` |
+| `serviceAccount.annotations` | ServiceAccount annotations | `{}` |
+| `serviceAccount.automountServiceAccountToken` | Automount API credentials | `true` |
 | `image.repository` | Container image repository | `lscr.io/linuxserver/grocy` |
 | `image.tag` | Image tag (defaults to appVersion) | `""` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
 | `env` | Map of environment variables | `{PUID: "1000", PGID: "1000", TZ: "Etc/UTC"}` |
 | `extraEnv` | List-form env vars for valueFrom/secret refs | `[]` |
 | `envFrom` | Bulk secret/configmap env mounting | `[]` |
+| `podAnnotations` | Annotations added to pods only | `{}` |
+| `podLabels` | Labels added to pods only | `{}` |
 | `service.type` | Service type | `ClusterIP` |
 | `service.port` | Service port | `80` |
 | `persistence.enabled` | Enable persistent storage | `true` |
@@ -45,6 +52,10 @@ helm install grocy .
 | `persistence.accessMode` | PVC access mode | `ReadWriteOnce` |
 | `persistence.size` | PVC size | `1Gi` |
 | `persistence.existingClaim` | Use an existing PVC | `""` |
+| `extraVolumes` | Additional volumes | `[]` |
+| `extraVolumeMounts` | Additional volume mounts | `[]` |
+| `extraInitContainers` | Additional init containers | `[]` |
+| `extraContainers` | Additional sidecar containers | `[]` |
 | `ingress.enabled` | Enable Ingress | `false` |
 | `ingress.className` | Ingress class name | `""` |
 | `ingress.annotations` | Ingress annotations | `{}` |
@@ -58,13 +69,18 @@ helm install grocy .
 | `httpRoute.httpRedirect.sectionName` | HTTP listener section name | `http` |
 | `resources.requests.cpu` | CPU request | `50m` |
 | `resources.requests.memory` | Memory request | `128Mi` |
-| `resources.limits.cpu` | CPU limit | `500m` |
 | `resources.limits.memory` | Memory limit | `512Mi` |
 | `livenessProbe` | Liveness probe configuration | HTTP GET `/` |
 | `readinessProbe` | Readiness probe configuration | HTTP GET `/` |
+| `startupProbe.enabled` | Enable startup probe (for slow first-run migrations) | `false` |
+| `startupProbe.failureThreshold` | Startup probe failure threshold | `30` |
 | `nodeSelector` | Node selector | `{}` |
 | `tolerations` | Tolerations | `[]` |
 | `affinity` | Affinity rules | `{}` |
+| `topologySpreadConstraints` | Topology spread constraints | `[]` |
+| `priorityClassName` | Pod priority class | `""` |
+| `dnsConfig` | Pod DNS config | `{}` |
+| `dnsPolicy` | Pod DNS policy | `""` |
 | `podSecurityContext` | Pod security context | `{}` |
 | `securityContext` | Container security context | `{}` |
 | `commonLabels` | Labels added to all resources | `{}` |

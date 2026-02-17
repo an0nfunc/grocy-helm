@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - "templates/**"
+      - "values.yaml"
+      - "Chart.yaml"
+      - "tests/**"
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Set up Helm
+        uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
+
+      - name: Lint chart
+        run: helm lint .
+
+      - name: Install kubeconform
+        run: |
+          curl -sSL https://github.com/yannh/kubeconform/releases/download/v0.7.0/kubeconform-linux-amd64.tar.gz | tar xz
+          sudo mv kubeconform /usr/local/bin/
+
+      - name: Validate default values
+        run: helm template test-release . | kubeconform -strict -kubernetes-version 1.30.0 -summary
+
+      - name: Validate with ingress
+        run: helm template test-release . --set ingress.enabled=true | kubeconform -strict -kubernetes-version 1.30.0 -summary
+
+      - name: Validate with httpRoute
+        run: |
+          helm template test-release . \
+            --set httpRoute.enabled=true \
+            --set 'httpRoute.parentRefs[0].name=default' \
+            --set 'httpRoute.hostnames[0]=grocy.example.com' \
+            | kubeconform -strict -kubernetes-version 1.30.0 -summary -skip HTTPRoute
