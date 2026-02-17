@@ -1,0 +1,103 @@
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: lscr.io/linuxserver/grocy
+  # -- Defaults to the chart's appVersion
+  tag: ""
+  pullPolicy: IfNotPresent
+
+# -- Map of environment variables injected into the container
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "Etc/UTC"
+
+# -- List-form env vars for valueFrom / secret refs
+# Example:
+#   - name: GROCY_API_KEY
+#     valueFrom:
+#       secretKeyRef:
+#         name: grocy-secrets
+#         key: api-key
+extraEnv: []
+
+# -- Mount all keys from ConfigMaps or Secrets as env vars
+# Example:
+#   - secretRef:
+#       name: grocy-secrets
+envFrom: []
+
+service:
+  type: ClusterIP
+  port: 80
+
+persistence:
+  enabled: true
+  # -- Leave empty to use the cluster default StorageClass
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  # -- Use an existing PVC instead of creating one
+  existingClaim: ""
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: grocy.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: grocy-tls
+  #    hosts:
+  #      - grocy.example.com
+
+httpRoute:
+  enabled: false
+  annotations: {}
+  # -- Gateway parentRefs
+  # Example:
+  #   - name: default
+  #     namespace: nginx-gateway
+  #     sectionName: https
+  parentRefs: []
+  hostnames: []
+  httpRedirect:
+    enabled: false
+    # -- Section name of the HTTP listener on the gateway
+    sectionName: http
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+podSecurityContext: {}
+securityContext: {}
+
+commonLabels: {}
+commonAnnotations: {}

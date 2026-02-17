@@ -1,0 +1,31 @@
+Grocy has been deployed!
+
+{{- if .Values.ingress.enabled }}
+
+Access Grocy at:
+{{- range .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+{{- end }}
+
+{{- else if .Values.httpRoute.enabled }}
+
+Access Grocy at:
+{{- range .Values.httpRoute.hostnames }}
+  https://{{ . }}
+{{- end }}
+
+{{- else }}
+
+Access Grocy via port-forward:
+
+  kubectl port-forward svc/{{ include "grocy.fullname" . }} 8080:{{ .Values.service.port }} -n {{ .Release.Namespace }}
+
+Then open http://localhost:8080 in your browser.
+
+{{- end }}
+
+Default credentials:
+  Username: admin
+  Password: admin
+
+Change these immediately after first login!

@@ -1,0 +1,17 @@
+env:
+  TZ: "Europe/Berlin"
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: grocy.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: grocy-tls
+      hosts:
+        - grocy.example.com

@@ -1,0 +1,16 @@
+apiVersion: v2
+name: grocy
+description: A Helm chart for Grocy — self-hosted grocery and household management
+type: application
+version: 0.1.0
+appVersion: "4.3.0"
+keywords:
+  - grocy
+  - grocery
+  - household
+  - self-hosted
+home: https://grocy.info
+sources:
+  - https://github.com/grocy/grocy
+maintainers:
+  - name: harting

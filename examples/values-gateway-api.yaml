@@ -1,0 +1,18 @@
+env:
+  TZ: "Europe/Berlin"
+
+httpRoute:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  parentRefs:
+    - name: default
+      namespace: nginx-gateway
+      sectionName: https
+  hostnames:
+    - grocy.example.com
+  httpRedirect:
+    enabled: true
+
+persistence:
+  storageClass: hcloud-volumes
