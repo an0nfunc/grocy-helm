@@ -17,6 +17,18 @@ Uses the [LinuxServer.io](https://docs.linuxserver.io/images/docker-grocy/) cont
 ### From OCI registry
 
 ```bash
+helm install grocy oci://ghcr.io/an0nfunc/charts/grocy \
+  --set env.TZ="Europe/Berlin" \
+  --set ingress.enabled=true \
+  --set ingress.className=nginx \
+  --set 'ingress.hosts[0].host=grocy.example.com' \
+  --set 'ingress.hosts[0].paths[0].path=/' \
+  --set 'ingress.hosts[0].paths[0].pathType=Prefix'
+```
+
+Or with just the defaults (access via `kubectl port-forward`):
+
+```bash
 helm install grocy oci://ghcr.io/an0nfunc/charts/grocy
 ```
 
