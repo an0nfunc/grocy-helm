@@ -1,5 +1,5 @@
-env:
-  TZ: "Europe/Berlin"
+# env:
+#   TZ: "America/New_York"
 
 ingress:
   enabled: true
