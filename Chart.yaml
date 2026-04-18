@@ -3,7 +3,7 @@ name: grocy
 description: A Helm chart for Grocy — self-hosted grocery and household management
 type: application
 version: 0.1.0
-appVersion: "4.3.0"
+appVersion: "4.6.0"
 kubeVersion: ">=1.26.0-0"
 keywords:
   - grocy
